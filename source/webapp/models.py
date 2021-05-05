@@ -51,6 +51,7 @@ class Series(models.Model):
 
 
 class Coin(models.Model):
+    picture = models.ImageField(null=True, blank=True, upload_to='coin_pics', verbose_name='картинка монеты')
     nominal = models.IntegerField(verbose_name='номинал', validators=(MinValueValidator(0),))
     material = models.ForeignKey('webapp.Material', related_name='coins', on_delete=models.PROTECT, verbose_name='материал')
     currency = models.ForeignKey('webapp.Currency', related_name='coins', on_delete=models.PROTECT, verbose_name='валюта')

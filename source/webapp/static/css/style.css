@@ -1,0 +1,11 @@
+body{
+	font-family: 'Raleway', sans-serif;
+}
+.navbar {
+	background: #5bbc2e;
+	font-weight: 600;
+}
+.navbar button{
+	font-weight: 700;
+	font-size: 14px;
+}

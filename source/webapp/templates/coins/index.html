@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Coins{% endblock %}
+{% block styles %}<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">{% endblock %}
+
+{% block search %}
+    <div class="search-form">
+        <form action="{% url 'index' %}" method="GET">
+            <input type="text" name="search">
+            <input type="submit" value="Найти">
+        </form>
+    </div>
+{% endblock %}
+{% block content %}
+<h1>Монеты: </h1>
+    <div class="row text-uppercase">
+        {% for coin in coins %}
+            <div class="col col-12 col-sm-6 col-lg-3 mb-4">
+                <div class="card mb-3 mb-xl-0 h-100">
+                    {% if coin.picture %}
+                        <img src="{{ coin.picture.url }}" class="picture card-img-top" width="auto" height="250" alt="product picture">
+                    {% else %}
+                        <img src="{% static 'img/empty.jpg' %}" class="card-img-top" width="250" height="250" alt="empty picture">
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h3>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h3>
+                        <a href="#portfolio" class="btn btn-primary btn-card mb-3">Graphics</a>
+{#                        <p class="card-text">Round Icons Design</p>#}
+                    </div>
+                </div>
+            </div>
+
+
+{#                <h3><a href="{% url 'project_view' project.pk %}" class="card-button">{{ project.name }}</a></h3>#}
+
+{#                <p>Дата начала: {{ project.date_start }}</p>#}
+{#                <p>Дата завершения: {{ project.date_end }}</p>#}
+{#                <p>Автор:#}
+{#                    {% for author in project.author.all %}#}
+{#                        <a href="{% url 'accounts:detail' author.pk %}">{{ author }}</a>#}
+{#                    {% endfor %}</p>#}
+
+        {% endfor %}
+
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+</div>
+{#    {% include 'partial/project_list.html' %}#}
+{% endblock %}
