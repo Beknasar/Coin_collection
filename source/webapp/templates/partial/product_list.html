@@ -1,0 +1,24 @@
+<div class = "products">
+    {% for product in products %}
+        <div class="card">
+            <div class="card-content">
+                <br/>
+                <div style="float: right">
+                    {% if perms.webapp.change_product %}
+                        <a href="{% url 'product_update' product.pk %}" class="card-link"><i class="far fa-edit"></i></a>
+                    {% endif %}
+                    {% if perms.webapp.delete_product %}
+                        <a href="{% url 'product_delete' product.pk %}" class="card-link"><i class="far fa-trash-alt"></i></a>
+                    {% endif %}
+                </div>
+                <br/>
+                <h3><a href="{% url 'product_view' product.pk %}" class="card-button">{{ product.name }}</a></h3>
+                <p>Категория: {{ product.category }}</p>
+                <br/>
+            </div>
+        </div>
+    {% endfor %}
+     {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+</div>
