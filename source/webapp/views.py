@@ -1,5 +1,7 @@
+from django.urls import reverse_lazy, reverse
+
 from webapp.models import Coin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
 from webapp.forms import SearchForm, CoinForm
 from django.db.models import Q
@@ -25,11 +27,27 @@ class IndexView(ListView):
         form = SearchForm(data=self.request.GET)
         if form.is_valid():
             search = form.cleaned_data['search']
-            print(search)
-            print(data)
             if search:
-                data = data.filter(Q(country__name__icontains=search) | Q(year_of_issue__icontains=search))
+                data = data.filter(Q(country__name__icontains=search) | Q(year_of_issue__icontains=search) | Q(currency__name__icontains=search))
 
-        return data.order_by('-country')
+        return data.order_by('year_of_issue')
 
 
+class CoinDetailView(DetailView):
+    model = Coin
+    template_name = 'coins/coin_view.html'
+
+
+class CoinDeleteView(DeleteView):
+    template_name = 'coins/coin_delete.html'
+    model = Coin
+    success_url = reverse_lazy('webapp:index')
+
+
+class CoinCreateView(CreateView):
+    template_name = 'coins/coin_create.html'
+    form_class = CoinForm
+    model = Coin
+
+    def get_success_url(self):
+        return reverse('webapp:coin_view', kwargs={'pk': self.object.pk})

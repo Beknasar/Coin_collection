@@ -9,3 +9,13 @@ body{
 	font-weight: 700;
 	font-size: 14px;
 }
+
+table {
+	border: 2px solid grey;
+	border-collapse: collapse;
+	margin: auto;
+}
+table tr, table td {
+	border: 1px dashed grey;
+	padding: 3px;
+}

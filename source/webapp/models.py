@@ -59,13 +59,13 @@ class Coin(models.Model):
     weight = models.FloatField(verbose_name='Вес', validators=(MinValueValidator(0),))
     size = models.CharField(max_length=100, null=False, blank=False, verbose_name="размер")
     form = models.CharField(max_length=100, null=False, blank=False, verbose_name="Форма")
-    year_of_issue = models.DateField(verbose_name='Дата выпуска', blank=True, null=True)
-    year_of_issue_end = models.DateField(verbose_name='Дата окончания выпуска', blank=True, null=True)
+    year_of_issue = models.IntegerField(verbose_name='Дата выпуска', null=True, blank=True)
+    year_of_issue_end = models.IntegerField(verbose_name='Дата окончания выпуска', null=True, blank=True)
     series = models.ForeignKey('webapp.Series', related_name='coins', on_delete=models.PROTECT, verbose_name='серия', null=True, blank=True)
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name='Описание')
 
     def __str__(self):
-        return f"{self.nominal} {self.currency} {self.year_of_issue.year}"
+        return f"{self.nominal} {self.currency} {self.year_of_issue}"
 
     class Meta:
         verbose_name = "монета"

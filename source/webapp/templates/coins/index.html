@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Coins{% endblock %}
+{% block menu %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'webapp:coin_create' %}">Add Coin <i class="fas fa-plus-circle"></i></a>
+    </li>
+{% endblock %}
 {% block search %}
-    <form class="d-flex" action="{% url 'webapp:index' %}" method="GET">
+    <form class="d-flex input-group w-auto" action="{% url 'webapp:index' %}" method="GET">
       <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button class="btn btn-secondary" type="submit">Search</button>
     </form>
 {% endblock %}
 {% block content %}
