@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy, reverse
 
-from webapp.models import Coin
+from webapp.models import Coin, Country, Currency
 from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
 from webapp.forms import SearchForm, CoinForm
@@ -19,11 +19,13 @@ class IndexView(ListView):
             search = form.cleaned_data['search']
             kwargs['search'] = search
         kwargs['form'] = form
+        kwargs['countries'] = Country.objects.all()
+        kwargs['currencies'] = Currency.objects.all()
+
         return super().get_context_data(object_list=object_list, **kwargs)
 
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         data = Coin.objects.all()
-
         form = SearchForm(data=self.request.GET)
         if form.is_valid():
             search = form.cleaned_data['search']
@@ -51,3 +53,14 @@ class CoinCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('webapp:coin_view', kwargs={'pk': self.object.pk})
+
+
+class CategoryView(ListView):
+    template_name = 'coins/coin_categories.html'
+    context_object_name = 'coins'
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        return Coin.objects.filter(country__pk=pk)
+
+    # .filter(nominal=1).filter(currency__name__icontains="дублон")

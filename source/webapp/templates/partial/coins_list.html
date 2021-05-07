@@ -1,8 +1,10 @@
 {% load staticfiles %}
+<br>
 <div class="row text-uppercase">
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
+
     {% for coin in coins %}
         <div class="col col-12 col-sm-6 col-lg-3 mb-4">
             <div class="card mb-3 mb-xl-0 h-100">
