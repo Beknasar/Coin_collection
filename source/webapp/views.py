@@ -61,6 +61,4 @@ class CategoryView(ListView):
 
     def get_queryset(self, **kwargs):
         pk = self.kwargs.get('pk')
-        return Coin.objects.filter(country__pk=pk)
-
-    # .filter(nominal=1).filter(currency__name__icontains="дублон")
+        return Coin.objects.filter(country__pk=pk).order_by('year_of_issue')
