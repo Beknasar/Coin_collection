@@ -72,16 +72,6 @@ class UserDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
         return self.request.user.pk == self.kwargs['pk']
 
     def get_context_data(self, **kwargs):
-        # print(self.object.orders.all())
-        # print(self.object)
-        #     for product in order.products.all():
-        #         paginator = Paginator(product, self.paginate_related_by, orphans=self.paginate_related_orphans)
-        #         page_number = self.request.GET.get('page', 1)
-        #         page = paginator.get_page(page_number)
-        #         kwargs['page_obj'] = page
-        #         kwargs['products'] = page.object_list
-        #         kwargs['is_paginated'] = page.has_other_pages()
-        # return super().get_context_data(**kwargs)
         return super().get_context_data(**kwargs)
 
 

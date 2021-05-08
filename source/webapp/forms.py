@@ -11,4 +11,4 @@ class SearchForm(forms.Form):
 class CoinForm(forms.ModelForm):
     class Meta:
         model = Coin
-        exclude = []
+        exclude = ['owner']

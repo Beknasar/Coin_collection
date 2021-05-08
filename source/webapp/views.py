@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 
 from webapp.models import Coin, Country, Currency
@@ -40,16 +42,27 @@ class CoinDetailView(DetailView):
     template_name = 'coins/coin_view.html'
 
 
-class CoinDeleteView(DeleteView):
+class CoinDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'coins/coin_delete.html'
     model = Coin
     success_url = reverse_lazy('webapp:index')
 
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_coin') or \
+            self.get_object().owner == self.request.user
 
-class CoinCreateView(CreateView):
+
+class CoinCreateView(LoginRequiredMixin, CreateView):
     template_name = 'coins/coin_create.html'
     form_class = CoinForm
     model = Coin
+
+    def form_valid(self, form):
+        coin = form.save(commit=False)
+        coin.owner = self.request.user
+        coin.save()
+        # form.save_m2m()  ## для сохранения связей многие-ко-многим
+        return redirect('webapp:coin_view', pk=coin.pk)
 
     def get_success_url(self):
         return reverse('webapp:coin_view', kwargs={'pk': self.object.pk})

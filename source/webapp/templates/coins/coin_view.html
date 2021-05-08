@@ -3,9 +3,9 @@
 {% block title %}View{% endblock %}
 
 {% block menu %}
-{#    {% if perms.webapp.delete_product %}#}
+    {% if perms.webapp.delete_coin or coin.owner == request.user %}
         <li class="nav-item"><a class="nav-link" href="{% url "webapp:coin_delete" coin.pk %}">Delete<i class="fas fa-trash"></i></a></li>
-{#    {% endif %}#}
+    {% endif %}
 {#    {% if perms.webapp.change_product %}#}
 {#        <li><a href="{% url 'product_update' product.pk %}">Update <i class="fas fa-edit"></i></a></li>#}
 {#    {% endif %}#}
