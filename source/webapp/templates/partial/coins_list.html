@@ -4,9 +4,8 @@
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
-
     {% for coin in coins %}
-        <div class="col col-12 col-sm-6 col-lg-3 mb-4">
+        <div class="col col-12 col-sm-6 col-lg-3 my-3">
             <div class="card mb-3 mb-xl-0 h-100">
                 {% if coin.picture %}
                     <img src="{{ coin.picture.url }}" class="picture card-img-top" width="auto" height="250" alt="coin picture">
@@ -17,7 +16,9 @@
                     <h3>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h3>
                     <div class="mt-auto">
                         <a href="{% url "webapp:coin_view" coin.pk %}" class="btn btn-primary btn-card">Подробнее</a>
-                        <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
+                        {% if perms.webapp.delete_coin or coin.owner == request.user %}
+                            <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
