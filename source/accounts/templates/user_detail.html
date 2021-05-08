@@ -23,7 +23,7 @@
         <p>О себе:</p>
         <p class="pre">{{ user_obj.profile.about }}</p>
     </div>
-    <h2 class="text-center clear">Заказы пользователя:</h2>
+    <h2 class="text-center clear">Монеты пользователя:</h2>
     {% for order in user_obj.orders.all %}
         <h2>Дата заказа: {{ order.date_create }}</h2>
         <table class="cart-table" style="margin-top: 0" align="center">

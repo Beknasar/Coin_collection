@@ -31,11 +31,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:detail' request.user.pk %}">Привет, {{ request.user.get_full_name|default:request.user.username }}</a>
                     </li>
-{#                    {% if perms.webapp.add_product %}#}
+                    {% if perms.webapp.change_coins %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:list' %}">User list</a>
                     </li>
-{#                    {% endif %}#}
+                    {% endif %}
                     {% block menu %}{% endblock %}
                 {% endif %}
 

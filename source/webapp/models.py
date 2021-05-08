@@ -51,6 +51,8 @@ class Series(models.Model):
 
 
 class Coin(models.Model):
+    owner = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
+                               related_name='coins', verbose_name='Коллекционер')
     picture = models.ImageField(null=True, blank=True, upload_to='coin_pics', verbose_name='картинка монеты')
     nominal = models.IntegerField(verbose_name='номинал', validators=(MinValueValidator(0),))
     material = models.ForeignKey('webapp.Material', related_name='coins', on_delete=models.PROTECT, verbose_name='материал')
