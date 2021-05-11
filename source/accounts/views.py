@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.db.models import Q, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -61,25 +61,25 @@ class UserListView(PermissionRequiredMixin, ListView):
         return self.request.user.groups.filter(pk=2) or self.request.user.groups.filter(pk=3) or self.request.user.pk == 1
 
 
-class UserDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
     paginate_related_by = 5
     paginate_related_orphans = 0
 
-    def has_permission(self):
-        return self.request.user.pk == self.kwargs['pk']
-
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
 
 
-class UserChangeView(PermissionRequiredMixin, UpdateView):
+class UserChangeView(UserPassesTestMixin, UpdateView):
     model = get_user_model()
     form_class = UserChangeForm
     template_name = 'user_change.html'
     context_object_name = 'user_obj'
+
+    def test_func(self):
+        return self.request.user == self.get_object()
 
     def get_success_url(self):
         return reverse('accounts:detail', kwargs={'pk': self.object.pk})
@@ -89,8 +89,6 @@ class UserChangeView(PermissionRequiredMixin, UpdateView):
             kwargs['profile_form'] = self.get_profile_form()
         return super().get_context_data(**kwargs)
 
-    def has_permission(self):
-        return self.request.user.pk == self.kwargs['pk']
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
