@@ -22,6 +22,7 @@
             <br>
         {% endif %}
         <h1>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h1>
+        <h2>Коллекционер: {{ coin.owner.get_full_name|default:coin.owner.username }}</h2>
         <br>
         <table>
             <tr>
