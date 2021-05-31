@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from webapp.models import Coin, Country, Currency, Series
 from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
-from webapp.forms import SearchForm, CoinForm, SeriesForm
+from webapp.forms import SearchForm, CoinForm
 from django.db.models import Q
 
 
