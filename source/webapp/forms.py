@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from webapp.models import Coin, Country, Currency
+from webapp.models import Coin, Series
 
 
 class SearchForm(forms.Form):

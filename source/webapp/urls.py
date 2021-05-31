@@ -11,7 +11,6 @@ urlpatterns = [
             path('', CoinDetailView.as_view(), name='coin_view'),
             path('delete/', CoinDeleteView.as_view(), name='coin_delete'),
         ])),
-        path('create/', CoinCreateView.as_view(), name='coin_create'),
-        path('category/<int:pk>/', CategoryView.as_view(), name='coin_category'),
-    ])),
+        path('create/', CoinCreateView.as_view(), name='coin_create'),])),
+    path('country/<int:pk>/', CategoryView.as_view(), name='coin_category'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

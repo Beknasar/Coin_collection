@@ -2,39 +2,39 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 
-from webapp.models import Coin, Country, Currency
+from webapp.models import Coin, Country, Currency, Series
 from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
-from webapp.forms import SearchForm, CoinForm
+from webapp.forms import SearchForm, CoinForm, SeriesForm
 from django.db.models import Q
 
 
 class IndexView(ListView):
     template_name = 'coins/index.html'
-    context_object_name = 'coins'
+    context_object_name = 'countries'
     paginate_by = 4
     paginate_orphans = 1
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        form = SearchForm(data=self.request.GET)
-        if form.is_valid():
-            search = form.cleaned_data['search']
-            kwargs['search'] = search
-        kwargs['form'] = form
-        kwargs['countries'] = Country.objects.all()
-        kwargs['currencies'] = Currency.objects.all()
-
-        return super().get_context_data(object_list=object_list, **kwargs)
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     form = SearchForm(data=self.request.GET)
+    #     if form.is_valid():
+    #         search = form.cleaned_data['search']
+    #         kwargs['search'] = search
+    #     kwargs['form'] = form
+    #     # kwargs['countries'] = Country.objects.all()
+    #     # kwargs['currencies'] = Currency.objects.all()
+    #
+    #     return super().get_context_data(object_list=object_list, **kwargs)
 
     def get_queryset(self, **kwargs):
-        data = Coin.objects.all()
+        data = Country.objects.all()
         form = SearchForm(data=self.request.GET)
         if form.is_valid():
             search = form.cleaned_data['search']
             if search:
-                data = data.filter(Q(country__name__icontains=search) | Q(year_of_issue__icontains=search) | Q(currency__name__icontains=search))
-
-        return data.order_by('year_of_issue')
+                # data = data.filter(Q(country__name__icontains=search) | Q(year_of_issue__icontains=search) | Q(currency__name__icontains=search))
+                data = data.filter(Q(name__icontains=search))
+        return data
 
 
 class CoinDetailView(DetailView):
@@ -68,10 +68,32 @@ class CoinCreateView(LoginRequiredMixin, CreateView):
         return reverse('webapp:coin_view', kwargs={'pk': self.object.pk})
 
 
-class CategoryView(ListView):
+class CategoryView(DetailView):
+    model = Country
     template_name = 'coins/coin_categories.html'
-    context_object_name = 'coins'
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk')
-        return Coin.objects.filter(country__pk=pk).order_by('year_of_issue')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        form = SearchForm(data=self.request.GET)
+        data = Coin.objects.all()
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            if search:
+                data = data.filter(Q(year_of_issue__icontains=search) | Q(currency__name__icontains=search))
+            kwargs['search'] = search
+        kwargs['form'] = form
+        kwargs['coins'] = data.filter(country__pk=self.object.pk)
+        # kwargs['currencies'] = Currency.objects.all()
+
+        return super().get_context_data(object_list=object_list, **kwargs)
+
+    # def get_queryset(self, **kwargs):
+    #     pk = self.kwargs.get('pk')
+    #     data = Coin.objects.filter(country__pk=pk)
+    #     form = SearchForm(data=self.request.GET)
+    #     if form.is_valid():
+    #         search = form.cleaned_data['search']
+    #         if search:
+    #             data = data.filter(Q(year_of_issue__icontains=search) | Q(currency__name__icontains=search))
+    #     return data.order_by('year_of_issue')
+
+
