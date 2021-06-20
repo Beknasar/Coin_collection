@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}View{% endblock %}
+
+{% block content %}
+    <h1>Название: {{ collection.name }}</h1>
+    <p>Страны: {{ collection.countries }}</p>
+    <p>Годы: {{ collection.years }}</p>
+    <p class="pre">{{ collection.comment }}</p>
+    <h1 class="text-center">Ваши монеты:</h1>
+    {% include 'partial/coins_list.html' with coins=collection.coins_coll.all without_collect_button=True %}
+{% endblock %}

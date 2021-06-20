@@ -20,7 +20,7 @@
                             <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
                         {% endif %}
                     </div>
-                    {% if request.user.is_authenticated %}
+                    {% if request.user.is_authenticated and not without_collect_button %}
                         <a href="{% url "webapp:collection_coin_create" coin.pk %}" class="btn btn-success mt-1">Добавить в коллекцию</a>
                     {% endif %}
                 </div>

@@ -63,100 +63,129 @@
   }
 },
 {
+  "model": "webapp.country",
+  "pk": 6,
+  "fields": {
+    "name": "\u0424\u0440\u0430\u043d\u0446\u0438\u044f"
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 1,
+  "fields": {
+    "nominal": 1,
+    "currency": 3
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 2,
+  "fields": {
+    "nominal": 100,
+    "currency": 3
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 3,
+  "fields": {
+    "nominal": 1,
+    "currency": 5
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 4,
+  "fields": {
+    "nominal": 5,
+    "currency": 7
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 5,
+  "fields": {
+    "nominal": 1,
+    "currency": 9
+  }
+},
+{
+  "model": "webapp.nominal",
+  "pk": 6,
+  "fields": {
+    "nominal": 100,
+    "currency": 10
+  }
+},
+{
   "model": "webapp.currency",
   "pk": 3,
   "fields": {
-    "name": "\u0434\u043e\u043b\u043b\u0430\u0440"
+    "name": "\u0434\u043e\u043b\u043b\u0430\u0440",
+    "country": 1
   }
 },
 {
   "model": "webapp.currency",
   "pk": 4,
   "fields": {
-    "name": "\u0444\u0440\u0430\u043d\u043a"
+    "name": "\u0444\u0440\u0430\u043d\u043a",
+    "country": 6
   }
 },
 {
   "model": "webapp.currency",
   "pk": 5,
   "fields": {
-    "name": "\u0434\u0443\u0431\u043b\u043e\u043d\u044b"
+    "name": "\u0434\u0443\u0431\u043b\u043e\u043d\u044b",
+    "country": 1
   }
 },
 {
   "model": "webapp.currency",
   "pk": 6,
   "fields": {
-    "name": "\u0441\u043e\u0432\u0435\u0440\u0435\u043d"
+    "name": "\u0441\u043e\u0432\u0435\u0440\u0435\u043d",
+    "country": 3
   }
 },
 {
   "model": "webapp.currency",
   "pk": 7,
   "fields": {
-    "name": "\u0440\u0435\u0439\u0445\u0441\u043c\u0430\u0440\u043a\u0430"
+    "name": "\u0440\u0435\u0439\u0445\u0441\u043c\u0430\u0440\u043a\u0430",
+    "country": 2
   }
 },
 {
   "model": "webapp.currency",
   "pk": 8,
   "fields": {
-    "name": "\u0442\u0430\u043b\u0435\u0440"
+    "name": "\u0442\u0430\u043b\u0435\u0440",
+    "country": 2
   }
 },
 {
   "model": "webapp.currency",
   "pk": 9,
   "fields": {
-    "name": "\u0440\u0443\u0431\u043b\u044c"
+    "name": "\u0440\u0443\u0431\u043b\u044c",
+    "country": 4
   }
 },
 {
   "model": "webapp.currency",
   "pk": 10,
   "fields": {
-    "name": "\u042e\u0430\u043d\u044c"
-  }
-},
-{
-  "model": "webapp.series",
-  "pk": 1,
-  "fields": {
-    "name": "60 \u043b\u0435\u0442 \u043e\u0431\u0440\u0430\u0437\u043e\u0432\u0430\u043d\u0438\u044f \u0421\u0421\u0421\u0420"
-  }
-},
-{
-  "model": "webapp.series",
-  "pk": 2,
-  "fields": {
-    "name": "\u0438\u043d\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u043e\u043d\u043d\u0430\u044f \u043c\u043e\u043d\u0435\u0442\u0430"
-  }
-},
-{
-  "model": "webapp.series",
-  "pk": 3,
-  "fields": {
-    "name": "Brasher Doubloon (\u0434\u0443\u0431\u043b\u043e\u043d \u0411\u0440\u0430\u0448\u0435\u0440\u0430)"
-  }
-},
-{
-  "model": "webapp.series",
-  "pk": 4,
-  "fields": {
-    "name": "\u0413\u0430\u0440\u043d\u0438\u0437\u043e\u043d\u043d\u0430\u044f \u0446\u0435\u0440\u043a\u043e\u0432\u044c \u0432 \u041f\u043e\u0442\u0441\u0434\u0430\u043c\u0435"
-  }
-},
-{
-  "model": "webapp.series",
-  "pk": 6,
-  "fields": {
-    "name": "Olympic (\u041e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430 1988 \u0432 \u0421\u0435\u0443\u043b\u0435)"
+    "name": "\u042e\u0430\u043d\u044c",
+    "country": 5
   }
 },
 {
   "model": "webapp.coin",
   "pk": 1,
   "fields": {
+    "owner": 1,
     "picture": "coin_pics/100-yuaney-2017-panda-6996.jpg",
     "nominal": 100,
     "material": 4,
@@ -167,7 +196,7 @@
     "form": "\u041a\u0440\u0443\u0433",
     "year_of_issue": 2017,
     "year_of_issue_end": null,
-    "series": 2,
+    "series": null,
     "description": "\u6211\u4e0d\u4f1a\u8bf4\u4e2d\u6587\u3002"
   }
 },
@@ -175,6 +204,7 @@
   "model": "webapp.coin",
   "pk": 2,
   "fields": {
+    "owner": 2,
     "picture": "coin_pics/dollar.jpg",
     "nominal": 1,
     "material": 1,
@@ -185,7 +215,7 @@
     "form": "\u041c\u043e\u043d\u0435\u0442\u043d\u0430\u044f",
     "year_of_issue": 1988,
     "year_of_issue_end": null,
-    "series": 6,
+    "series": null,
     "description": "\u0425\u0443\u0434\u043e\u0436\u043d\u0438\u043a:\r\n\u0430\u0432\u0435\u0440\u0441: Patricia Lewis Verani, \u0440\u0435\u0432\u0435\u0440\u0441: Sheri Joseph Winter"
   }
 },
@@ -193,6 +223,7 @@
   "model": "webapp.coin",
   "pk": 3,
   "fields": {
+    "owner": 1,
     "picture": "coin_pics/rubl.jpg",
     "nominal": 1,
     "material": 2,
@@ -203,7 +234,7 @@
     "form": "\u042e\u0431\u0438\u043b\u0435\u0439\u043d\u044b\u0435",
     "year_of_issue": 1982,
     "year_of_issue_end": null,
-    "series": 1,
+    "series": null,
     "description": "\u0420\u0435\u0432\u0435\u0440\u0441\r\n\u0412 \u0446\u0435\u043d\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0439 \u0447\u0430\u0441\u0442\u0438, \u043d\u0430 \u0444\u043e\u043d\u0435 \u043b\u0443\u0447\u0435\u0439 \u0432\u043e\u0441\u0445\u043e\u0434\u044f\u0449\u0435\u0433\u043e \u0441\u043e\u043b\u043d\u0446\u0430, \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 \u0412. \u0418. \u041b\u0435\u043d\u0438\u043d\u0430, \u0432 \u043d\u0438\u0436\u043d\u0435\u0439 \u0447\u0430\u0441\u0442\u0438, \u043d\u0430 \u0444\u043e\u043d\u0435 \u043b\u0430\u0432\u0440\u043e\u0432\u044b\u0445 \u0432\u0435\u0442\u0432\u0435\u0439, \u043d\u0430\u0434\u043f\u0438\u0441\u044c \u0432 \u0434\u0432\u0435 \u0441\u0442\u0440\u043e\u043a\u0438 \u00ab60 \u041b\u0415\u0422\u00bb. \u041f\u043e \u043e\u043a\u0440\u0443\u0436\u043d\u043e\u0441\u0442\u0438 \u043d\u0430\u0434\u043f\u0438\u0441\u044c \u00ab\u0421\u041e\u042e\u0417 \u0421\u041e\u0412\u0415\u0422\u0421\u041a\u0418\u0425 \u0421\u041e\u0426\u0418\u0410\u041b\u0418\u0421\u0422\u0418\u0427\u0415\u0421\u041a\u0418\u0425 \u0420\u0415\u0421\u041f\u0423\u0411\u041b\u0418\u041a\u00bb.\r\n\u0410\u0432\u0435\u0440\u0441\r\n\u0412 \u0432\u0435\u0440\u0445\u043d\u0435\u0439 \u0447\u0430\u0441\u0442\u0438 \u043c\u043e\u043d\u0435\u0442\u044b \u0440\u0430\u0441\u043f\u043e\u043b\u043e\u0436\u0435\u043d \u0433\u0435\u0440\u0431 \u0421\u0421\u0421\u0420, \u043e\u043f\u043e\u044f\u0441\u0430\u043d\u043d\u044b\u0439 \u043b\u0435\u043d\u0442\u043e\u0439 (15 \u0432\u0438\u0442\u043a\u043e\u0432). \u0410\u0431\u0431\u0440\u0435\u0432\u0438\u0430\u0442\u0443\u0440\u0430 \u00ab\u0421\u0421\u0421\u0420\u00bb \u0440\u0430\u0437\u0434\u0435\u043b\u0435\u043d\u0430 \u043d\u0430 \u0434\u0432\u0435 \u0447\u0430\u0441\u0442\u0438 \u2014 \u00ab\u0421\u0421\u00bb \u043d\u0430\u0445\u043e\u0434\u0438\u0442\u0441\u044f \u0441\u043b\u0435\u0432\u0430 \u043e\u0442 \u0433\u0435\u0440\u0431\u0430, \u0430 \u00ab\u0421\u0420\u00bb \u0441\u043f\u0440\u0430\u0432\u0430. \u041d\u0438\u0436\u0435 \u043d\u043e\u043c\u0438\u043d\u0430\u043b \u0438 \u0434\u0435\u043d\u0435\u0436\u043d\u0430\u044f \u0435\u0434\u0438\u043d\u0438\u0446\u0430: 1 \u0440\u0443\u0431\u043b\u044c."
   }
 },
@@ -211,6 +242,7 @@
   "model": "webapp.coin",
   "pk": 4,
   "fields": {
+    "owner": 1,
     "picture": "coin_pics/5-reyhsmarok.jpg",
     "nominal": 5,
     "material": 1,
@@ -221,7 +253,7 @@
     "form": "\u041c\u0435\u0434\u0430\u043b\u044c\u043d\u0430\u044f",
     "year_of_issue": 1935,
     "year_of_issue_end": null,
-    "series": 4,
+    "series": null,
     "description": "\u0420\u0435\u0432\u0435\u0440\u0441\r\n\u0413\u0430\u0440\u043d\u0438\u0437\u043e\u043d\u043d\u0430\u044f \u0446\u0435\u0440\u043a\u043e\u0432\u044c \u0432 \u041f\u043e\u0442\u0441\u0434\u0430\u043c\u0435.\r\n\u0410\u0432\u0435\u0440\u0441\r\n\u0412 \u0446\u0435\u043d\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0439 \u0447\u0430\u0441\u0442\u0438 \u043c\u043e\u043d\u0435\u0442\u044b \u0440\u0430\u0441\u043f\u043e\u043b\u043e\u0436\u0435\u043d \u043e\u0440\u0451\u043b, \u0443\u0441\u0442\u0440\u0435\u043c\u0438\u0432\u0448\u0438\u0439 \u0433\u043e\u043b\u043e\u0432\u0443 \u0432\u043f\u0440\u0430\u0432\u043e. \u0422\u0435\u043a\u0441\u0442:\r\nDeutsches Reich / 1935 / 5 Reichsmark."
   }
 },
@@ -229,6 +261,7 @@
   "model": "webapp.coin",
   "pk": 5,
   "fields": {
+    "owner": 1,
     "picture": "coin_pics/dublon.jpg",
     "nominal": 1,
     "material": 4,
@@ -239,8 +272,68 @@
     "form": "\u041c\u043e\u043d\u0435\u0442\u043d\u0430\u044f",
     "year_of_issue": 1787,
     "year_of_issue_end": null,
-    "series": 3,
+    "series": null,
     "description": ""
+  }
+},
+{
+  "model": "webapp.coin",
+  "pk": 7,
+  "fields": {
+    "owner": 1,
+    "picture": "",
+    "nominal": 100,
+    "material": 1,
+    "currency": 3,
+    "country": 1,
+    "weight": 3.0,
+    "size": "12",
+    "form": "\u041a\u0440\u0443\u0433",
+    "year_of_issue": 2017,
+    "year_of_issue_end": 2020,
+    "series": null,
+    "description": "\u0448\u0438\u043f\u0434\u0448\u0430\u043c\u043f\u0434\u0448"
+  }
+},
+{
+  "model": "webapp.coin",
+  "pk": 8,
+  "fields": {
+    "owner": 2,
+    "picture": "",
+    "nominal": 1,
+    "material": 4,
+    "currency": 3,
+    "country": 1,
+    "weight": 12.0,
+    "size": "38,1x3,1",
+    "form": "\u041a\u0440\u0443\u0433",
+    "year_of_issue": 1989,
+    "year_of_issue_end": null,
+    "series": null,
+    "description": "asdfasdfasdfasdfadasf"
+  }
+},
+{
+  "model": "webapp.collection",
+  "pk": 1,
+  "fields": {
+    "owner": 1,
+    "name": "\u0422\u0435\u0441\u0442",
+    "years": "1988-1989",
+    "countries": null,
+    "comment": "My first collection"
+  }
+},
+{
+  "model": "webapp.collection",
+  "pk": 9,
+  "fields": {
+    "owner": 2,
+    "name": "My first collection",
+    "years": "1987-1989",
+    "countries": "USA",
+    "comment": "My not very important comment."
   }
 }
 ]

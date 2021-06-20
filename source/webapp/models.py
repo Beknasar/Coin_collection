@@ -93,7 +93,7 @@ class Collection(models.Model):
 
 
 class Coin_in_Collection(Coin):
-    quantity = models.IntegerField(verbose_name='Количество', validators=(MinValueValidator(1),))
+    quantity = models.IntegerField(verbose_name='Количество', default=1, validators=(MinValueValidator(1),))
     collection = models.ForeignKey('webapp.Collection', related_name="coins_coll", on_delete=models.CASCADE, verbose_name="коллекция")
 
     def __str__(self):

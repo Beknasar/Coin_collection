@@ -25,7 +25,7 @@ class CollectionView(ListView):
 
 
 class CollectionCoinCreateView(CreateView):
-    template_name = 'collections/collection_coin_create.html'
+    template_name = 'collections/coin/collection_coin_create.html'
     form_class = CollectionCoinForm
     model = Coin_in_Collection
 
@@ -33,28 +33,37 @@ class CollectionCoinCreateView(CreateView):
         pk = self.kwargs.get('pk')
         return get_object_or_404(Coin, pk=pk)
 
+    def get_initial(self):
+        initial = {}
+        coin = self.get_object()
+        for key in 'picture', 'nominal', 'material', 'currency', 'weight', 'size', 'form', 'year_of_issue', 'year_of_issue_end', 'series', 'description':
+            initial[key] = getattr(coin, key)
+        return initial
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.get_object()
+        # kwargs['instance'] = self.get_object()
+        kwargs['coin'] = self.get_object()
         kwargs['pk'] = self.request.user.pk
         return kwargs
 
     def form_valid(self, form):
         coin = self.get_object()
         collection_coin = form.save(commit=False)
+        # print(type(collection_coin))
         collection_coin.owner = self.request.user
         country = get_object_or_404(Country, pk=coin.country.pk)
         collection_coin.country = country
+
         c = collection_coin.save()
-        print(c)
+        print(type(c))
         # form.save_m2m()  ## для сохранения связей многие-ко-многим
         return redirect('webapp:collection_coin_view', pk=collection_coin.pk)
 
 
-
 class CollectionCoinDetailView(DetailView):
     model = Coin_in_Collection
-    template_name = 'collections/collection_coin_detail.html'
+    template_name = 'collections/coin/collection_coin_detail.html'
 
 
 class CollectionCreateView(CreateView):
@@ -79,3 +88,8 @@ class CollectionCreateView(CreateView):
             next_url = reverse('webapp:index')
         print(next_url)
         return next_url
+
+
+class CollectionDetailView(DetailView):
+    model = Collection
+    template_name = 'collections/collection_detail.html'
