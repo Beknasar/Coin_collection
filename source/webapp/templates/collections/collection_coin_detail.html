@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}View{% endblock %}
+
+{% block menu %}
+    {% if perms.webapp.delete_coin %}
+        <li class="nav-item"><a class="nav-link" href="{% url "webapp:coin_delete" coin.pk %}">Delete<i class="fas fa-trash"></i></a></li>
+    {% endif %}
+{#    {% if request.user.is_authenticated %}#}
+{#        <li class="nav-item"><a class="nav-link" href="{% url "webapp:collection_coin_create" coin.pk %}">Добавить в коллекцию</a></li>#}
+{#    {% endif %}#}
+{% endblock %}
+
+{% block content %}
+    <div class="product_view text-center">
+        <br>
+        {% with coin_in_collection as coin %}
+            {% if coin.picture %}
+                <img src="{{ coin.picture.url }}" class="picture" width="auto" height="250" alt="coin picture">
+                <br>
+            {% else %}
+                <img src="{% static 'img/empty.jpg' %}" width="250" height="250" alt="empty picture">
+                <br>
+            {% endif %}
+            <h1>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h1>
+            <h2>Коллекционер: {{ coin.owner.get_full_name|default:coin.owner.username }}</h2>
+            <br>
+            <table>
+                <tr>
+                    <td>Номинал</td>
+                    <td>Материал</td>
+                    <td>Валюта</td>
+                    <td>Страна</td>
+                    <td>Вес</td>
+                    <td>Размер</td>
+                    <td>Форма</td>
+                    <td>Дата выпуска</td>
+                    <td>Дата окончания выпуска</td>
+                    <td>Серия</td>
+                </tr>
+                <tr>
+                    <td>{{ coin.nominal }}</td>
+                    <td>{{ coin.material }}</td>
+                    <td>{{ coin.currency }}</td>
+                    <td>{{ coin.country }}</td>
+                    <td>{{ coin.weight }}</td>
+                    <td>{{ coin.size }}</td>
+                    <td>{{ coin.form }}</td>
+                    <td>{{ coin.year_of_issue }}</td>
+                    <td>{{ coin.year_of_issue_end }}</td>
+                    <td>{{ coin.series }}</td>
+                    <td>{{ coin.collection }}</td>
+                    <td>{{ coin.quantity }}</td>
+                </tr>
+            </table>
+            <hr>
+            <label>Описание:</label>
+            <pre class="pre">{{ coin.description }}</pre>
+        </div>
+        {% endwith %}
+{% endblock %}

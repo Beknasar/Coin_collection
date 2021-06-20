@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Create{% endblock %}
+{% block menu %}
+        <ul class="navbar-nav">
+{#            <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}{% if next_url %}?next={{ next_url }}{% endif %}">Login</a></li>#}
+            <li class="nav-item"><a class="nav-link" href="{% url 'webapp:collection_create' %}?next={{ request.get_full_path }}">Создать коллекцию</a></li>
+        </ul>
+{% endblock %}
+{% block content %}
+    <div class="text-center">
+    <h1>Create coin</h1>
+        {% url 'webapp:coin_create' as action_url %}
+        {% include 'partial/form.html' with action_url=action_url form_method='post' enctype="multipart/form-data" button_text="Создать" %}
+        <br>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Create{% endblock %}
+{% block menu %}
+    {% if perms.webapp.add_coin %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'webapp:coin_create' nominal.currency.country.pk  %}" >Add Coin <i class="fas fa-plus-circle"></i></a>
+        </li>
+    {% endif %}
+{% endblock %}
+{% block search %}
+    <form class="d-flex input-group w-auto" action="{% url "webapp:coin_currency_nominal" nominal.pk %}" method="GET">
+      <input class="form-control me-2" type="text" name="search" placeholder="Введите год монеты" aria-label="Search">
+      <button class="btn btn-secondary" type="submit">Search</button>
+    </form>
+{% endblock %}
+{% block content %}
+    <div class="text-center">
+    {% include "partial/coins_list.html" %}
+        <br>
+    </div>
+{% endblock %}

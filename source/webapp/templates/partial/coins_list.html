@@ -16,10 +16,13 @@
                     <h3>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h3>
                     <div class="mt-auto">
                         <a href="{% url "webapp:coin_view" coin.pk %}" class="btn btn-primary btn-card">Подробнее</a>
-                        {% if perms.webapp.delete_coin or coin.owner == request.user %}
+                        {% if perms.webapp.delete_coin %}
                             <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
                         {% endif %}
                     </div>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url "webapp:collection_coin_create" coin.pk %}" class="btn btn-success mt-1">Добавить в коллекцию</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

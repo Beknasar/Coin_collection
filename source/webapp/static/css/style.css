@@ -9,7 +9,9 @@ body{
 	font-weight: 700;
 	font-size: 14px;
 }
-
+input[type='submit']:hover {
+    cursor: pointer;
+}
 table {
 	border: 2px solid grey;
 	border-collapse: collapse;
@@ -132,4 +134,13 @@ table tr, table td {
 
 .form-error:focus {
     box-shadow: 0 0 5px rgb(255, 0, 0);
+}
+.form-checkboxes {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0 5px 10px;
+}
+
+.form-checkboxes li {
+    padding: 3px;
 }

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Coins{% endblock %}
-{% block menu %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'webapp:coin_create' %}">Add Coin <i class="fas fa-plus-circle"></i></a>
-    </li>
+{#{% block menu %}#}
+{#    <li class="nav-item">#}
+{#        <a class="nav-link" href="{% url 'webapp:coin_create' %}">Add Coin <i class="fas fa-plus-circle"></i></a>#}
+{#    </li>#}
 {#    <li class="nav-item dropdown">#}
 {#      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
 {#          Страны#}
@@ -21,7 +21,7 @@
 {#        {% endfor %}#}
 {#      </ul>#}
 {#    </li>#}
-{% endblock %}
+{#{% endblock %}#}
 {% block search %}
     <form class="d-flex input-group w-auto" action="{% url 'webapp:index' %}" method="GET">
       <input class="form-control me-2" type="text" name="search" placeholder="Введите страну" aria-label="Search">
@@ -30,16 +30,13 @@
 {% endblock %}
 {% block content %}
 <h1 class="mt-1 text-center">Страны: </h1>
-    <h2>Список пользователей: </h2>
     <div class="container">
         <table class="table" align="center">
             {% for country in countries %}
                 <tr>
-                    <td><a class="dropdown-item" href="{% url "webapp:coin_category" country.pk %}">{{ country.name }}</a></td>
-{#                    <td><a href="{% url 'accounts:detail' user.pk%}">Ссылка</a></td>#}
+                    <td class="text-center"><a class="dropdown-item" href="{% url "webapp:coin_country" country.pk %}">{{ country.name }}</a></td>
                 </tr>
             {% endfor %}
         </table>
     </div>
-{#       {% include 'partial/coins_list.html' %}#}
 {% endblock %}

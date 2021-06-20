@@ -6,7 +6,8 @@
     <div class="text-center">
     <h1>Create coin</h1>
         {% url 'webapp:coin_create' as action_url %}
-        {% include 'partial/form.html' with action_url=action_url form_method='post' enctype="multipart/form-data" button_text="Создать"%}
+
+        {% include 'partial/form.html' with action_url=action_url form_method='post' enctype="multipart/form-data" button_text="Создать" %}
         <br>
     </div>
 {% endblock %}
