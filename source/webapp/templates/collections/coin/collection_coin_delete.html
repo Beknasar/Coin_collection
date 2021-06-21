@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Delete{% endblock %}
+
+{% block menu %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:collection_coin_view' coin_in_collection.pk %}?next={{ request.get_full_path }}">Отмена</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Вы уверены, что хотите удалить монету"{{ coin_in_collection.nominal }} {{ coin_in_collection.currency }} {{ coin_in_collection.year_of_issue }} [{{ coin_in_collection.country }}]" из коллекции {{ coin_in_collection.collection.name }}?</h1>
+        {% if coin.picture %}
+            <img src="{{ coin_in_collection.picture.url }}" class="picture" width="auto" height="250" alt="coin picture">
+            <br>
+        {% else %}
+            <img src="{% static 'img/empty.jpg' %}" width="250" height="250" alt="empty picture">
+            <br>
+        {% endif %}
+        <form action="{% url "webapp:collection_coin_delete" coin_in_collection.pk %}" method="post">
+            {% csrf_token %}
+            <br>
+            <button type="submit" class="btn btn-danger">Подтвердить</button>
+            <a href="{% url 'webapp:collection_coin_view' coin_in_collection.pk %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+{% endblock %}

@@ -15,12 +15,19 @@
                 <div class="card-body text-center d-flex flex-column">
                     <h3>{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]</h3>
                     <div class="mt-auto">
-                        <a href="{% url "webapp:coin_view" coin.pk %}" class="btn btn-primary btn-card">Подробнее</a>
-                        {% if perms.webapp.delete_coin %}
-                            <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
+                        {% if not collection_coins %}
+                            <a href="{% url "webapp:coin_view" coin.pk %}" class="btn btn-primary btn-card">Подробнее</a>
+                            {% if perms.webapp.delete_coin %}
+                                <a href="{% url "webapp:coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url "webapp:collection_coin_view" coin.pk %}" class="btn btn-primary btn-card">Подробнее</a>
+                            {% if perms.webapp.delete_coin_in_collection or coin.owner == request.user %}
+                                <a href="{% url "webapp:collection_coin_delete" coin.pk %}" class="btn btn-danger">Удалить</a>
+                            {% endif %}
                         {% endif %}
                     </div>
-                    {% if request.user.is_authenticated and not without_collect_button %}
+                    {% if request.user.is_authenticated and not collection_coins %}
                         <a href="{% url "webapp:collection_coin_create" coin.pk %}" class="btn btn-success mt-1">Добавить в коллекцию</a>
                     {% endif %}
                 </div>

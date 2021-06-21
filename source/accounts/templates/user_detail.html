@@ -23,10 +23,6 @@
         <p>О себе:</p>
         <p class="pre">{{ user_obj.profile.about }}</p>
     </div>
-    {% if perms.webapp.delete_coin and perms.webapp.change_coin %}
-        <h2 class="text-center clear">Монеты пользователя:</h2>
-        {% include 'partial/coins_list.html' with coins=user_obj.coins.all%}
-    {% endif %}
     <h2 class="text-center clear mt-2">Коллекции пользователя:</h2>
     <table class="table" align="center">
         {% for collection in user_obj.collections.all %}

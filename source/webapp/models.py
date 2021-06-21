@@ -6,9 +6,14 @@ from django.core.validators import MinValueValidator
 from datetime import date
 
 
-class Material(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False, verbose_name='название материала')
+class Base(models.Model):
+    name = models.CharField(max_length=100, null=False, blank=False, verbose_name='название')
 
+    class Meta:
+        abstract = True
+
+
+class Material(Base):
     def __str__(self):
         return self.name
 
@@ -17,9 +22,7 @@ class Material(models.Model):
         verbose_name_plural = "материалы"
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False, verbose_name="название страны")
-
+class Country(Base):
     def __str__(self):
         return self.name
 
@@ -40,8 +43,7 @@ class Nominal(models.Model):
         verbose_name_plural = "номиналы"
 
 
-class Currency(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False, verbose_name="название валюты")
+class Currency(Base):
     country = models.ForeignKey('webapp.Country', related_name='currencies', on_delete=models.PROTECT, verbose_name='страна')
 
     def __str__(self):
@@ -52,14 +54,14 @@ class Currency(models.Model):
         verbose_name_plural = "валюты"
 
 
-class Coin(models.Model):
-    owner = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
-                               related_name='coins', verbose_name='создатель')
+class CoinBase(models.Model):
     picture = models.ImageField(null=True, blank=True, upload_to='coin_pics', verbose_name='картинка монеты')
     nominal = models.IntegerField(verbose_name='номинал', validators=(MinValueValidator(0),))
-    material = models.ForeignKey('webapp.Material', related_name='coins', on_delete=models.PROTECT, verbose_name='материал')
-    currency = models.ForeignKey('webapp.Currency', related_name='coins', on_delete=models.PROTECT, verbose_name='валюта')
-    country = models.ForeignKey('webapp.Country', related_name='coins', on_delete=models.PROTECT, verbose_name='страна')
+    material = models.ForeignKey('webapp.Material', related_name='%(class)s', on_delete=models.PROTECT,
+                                 verbose_name='материал')
+    currency = models.ForeignKey('webapp.Currency', related_name='%(class)s', on_delete=models.PROTECT,
+                                 verbose_name='валюта')
+    country = models.ForeignKey('webapp.Country', related_name='%(class)s', on_delete=models.PROTECT, verbose_name='страна')
     weight = models.FloatField(verbose_name='Вес', validators=(MinValueValidator(0),))
     size = models.CharField(max_length=100, null=False, blank=False, verbose_name="размер")
     form = models.CharField(max_length=100, null=False, blank=False, verbose_name="Форма")
@@ -68,6 +70,11 @@ class Coin(models.Model):
     series = models.CharField(max_length=100, null=True, blank=True, verbose_name="Серия")
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name='Описание')
 
+    class Meta:
+        abstract = True
+
+
+class Coin(CoinBase):
     def __str__(self):
         return f"{self.nominal} {self.currency} {self.year_of_issue}"
 
@@ -76,10 +83,9 @@ class Coin(models.Model):
         verbose_name_plural = "монеты"
 
 
-class Collection(models.Model):
+class Collection(Base):
     owner = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
                               related_name='collections', verbose_name='Коллекционер')
-    name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Название')
     years = models.CharField(max_length=50, null=True, blank=True, verbose_name="Года")
     countries = models.CharField(max_length=100, null=True, blank=True, verbose_name="Страны")
     comment = models.TextField(max_length=400, null=True, blank=True, verbose_name='Комментарий')
@@ -92,12 +98,14 @@ class Collection(models.Model):
         verbose_name_plural = "Коллекции"
 
 
-class Coin_in_Collection(Coin):
+class Coin_in_Collection(CoinBase):
+    owner = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
+                               related_name='coins', verbose_name='создатель')
     quantity = models.IntegerField(verbose_name='Количество', default=1, validators=(MinValueValidator(1),))
     collection = models.ForeignKey('webapp.Collection', related_name="coins_coll", on_delete=models.CASCADE, verbose_name="коллекция")
 
     def __str__(self):
-        return self.quantity
+        return f'{self.nominal} {self.currency}  x{self.quantity} шт'
 
     class Meta:
         verbose_name = "монета в коллекции"

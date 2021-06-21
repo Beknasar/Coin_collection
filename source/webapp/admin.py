@@ -1,5 +1,5 @@
 from django.contrib import admin
-from webapp.models import Country, Currency, Material, Coin, Nominal, Coin_in_Collection, Collection
+from webapp.models import Country, Currency, Material, Coin, Nominal, Collection,  Coin_in_Collection
 
 
 class CountryAdmin(admin.ModelAdmin):

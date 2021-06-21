@@ -3,12 +3,9 @@
 {% block title %}View{% endblock %}
 
 {% block menu %}
-{#    {% if perms.webapp.delete_coin %}#}
-{#        <li class="nav-item"><a class="nav-link" href="{% url "webapp:coin_delete" coin.pk %}">Delete<i class="fas fa-trash"></i></a></li>#}
-{#    {% endif %}#}
-{#    {% if request.user.is_authenticated %}#}
-{#        <li class="nav-item"><a class="nav-link" href="{% url "webapp:collection_coin_create" coin.pk %}">Добавить в коллекцию</a></li>#}
-{#    {% endif %}#}
+    {% if perms.webapp.delete_coin %}
+        <li class="nav-item"><a class="nav-link" href="{% url "webapp:collection_coin_delete" coin_in_collection.pk %}">Delete<i class="fas fa-trash"></i></a></li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

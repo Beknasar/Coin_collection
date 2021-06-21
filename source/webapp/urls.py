@@ -21,6 +21,7 @@ urlpatterns = [
         path('<int:pk>/', include([
             path('', CollectionCoinDetailView.as_view(), name='collection_coin_view'),
             path('create/', CollectionCoinCreateView.as_view(), name='collection_coin_create'),
+            path('delete/', CollectionCoinDeleteView.as_view(), name='collection_coin_delete'),
         ])),
     ])),
     path('collections/', include([

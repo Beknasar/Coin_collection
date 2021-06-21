@@ -24,6 +24,16 @@ class CollectionView(ListView):
         return data
 
 
+class CollectionCoinDeleteView(DeleteView):
+    template_name = 'collections/coin/collection_coin_delete.html'
+    model = Coin_in_Collection
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_coin_in_collection') or \
+               self.get_object().owner == self.request.user
+
+
 class CollectionCoinCreateView(CreateView):
     template_name = 'collections/coin/collection_coin_create.html'
     form_class = CollectionCoinForm
@@ -93,3 +103,5 @@ class CollectionCreateView(CreateView):
 class CollectionDetailView(DetailView):
     model = Collection
     template_name = 'collections/collection_detail.html'
+
+

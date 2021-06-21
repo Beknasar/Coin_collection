@@ -35,8 +35,7 @@ class CoinDeleteView(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('webapp:index')
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.delete_coin') or \
-            self.get_object().owner == self.request.user
+        return self.request.user.has_perm('webapp.delete_coin')
 
 
 class CoinCreateView(LoginRequiredMixin, CreateView):
@@ -55,7 +54,6 @@ class CoinCreateView(LoginRequiredMixin, CreateView):
         coin = form.save(commit=False)
         currency = Currency.objects.get(pk=coin.currency.pk)
         Nominal.objects.get_or_create(nominal=coin.nominal, currency=currency)
-        coin.owner = self.request.user
         coin.country = country
         coin.save()
         # form.save_m2m()  ## для сохранения связей многие-ко-многим

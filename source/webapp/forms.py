@@ -16,7 +16,7 @@ class CoinForm(forms.ModelForm):
 
     class Meta:
         model = Coin
-        exclude = ['owner', 'country']
+        exclude = ['country']
 
 
 class CollectionForm(forms.ModelForm):
