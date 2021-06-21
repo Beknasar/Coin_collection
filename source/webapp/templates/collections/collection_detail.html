@@ -2,6 +2,9 @@
 {% load staticfiles %}
 {% block title %}View{% endblock %}
 {% block menu %}
+    {% if perms.webapp.delete_collection %}
+        <li class="nav-item"><a class="nav-link" href="{% url "webapp:collection_delete" collection.pk %}">Delete<i class="fas fa-trash"></i></a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <h1>Название: {{ collection.name }}</h1>

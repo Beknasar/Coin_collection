@@ -30,13 +30,15 @@ class CollectionCoinForm(forms.ModelForm):
         model = Coin_in_Collection
         exclude = ['owner', 'country']
 
-    def __init__(self, coin, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('pk', None)
+        coin = kwargs.pop('coin', None)
         super(CollectionCoinForm, self).__init__(*args, **kwargs)
         user = get_object_or_404(User, id=user_id)
         # print(user)
         self.fields['collection'].queryset = Collection.objects.filter(owner=user)
-        self.fields['currency'].queryset = Currency.objects.filter(country=coin.country)
+        if coin:
+            self.fields['currency'].queryset = Currency.objects.filter(country=coin.country)
 
     def clean(self):
         cleaned_data = super().clean()

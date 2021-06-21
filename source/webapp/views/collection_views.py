@@ -1,9 +1,9 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 
 from webapp.models import Coin, Country, Collection, Coin_in_Collection
-from django.views.generic import ListView, DetailView, DeleteView, CreateView
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from webapp.forms import SearchForm, CoinForm, CollectionForm, CollectionCoinForm
 from django.db.models import Q
 
@@ -16,11 +16,6 @@ class CollectionView(ListView):
 
     def get_queryset(self, **kwargs):
         data = Collection.objects.filter(owner=self.request.user)
-        # form = SearchForm(data=self.request.GET)
-        # if form.is_valid():
-        #     search = form.cleaned_data['search']
-        #     if search:
-        #         data = data.filter(Q(name__icontains=search))
         return data
 
 
@@ -105,3 +100,11 @@ class CollectionDetailView(DetailView):
     template_name = 'collections/collection_detail.html'
 
 
+class CollectionDeleteView(DeleteView):
+    template_name = 'collections/collection_delete.html'
+    model = Collection
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_collection') or \
+               self.get_object().owner == self.request.user

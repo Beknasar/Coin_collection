@@ -7,6 +7,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:change' user_obj.pk %}">Редактировать</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:password_change' user_obj.pk %}">Смена пароля</a></li>
     {% endif %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:collection_create' %}?next={{ request.get_full_path }}">Создать коллекцию</a></li>
 {% endblock %}
 
 {% block content %}

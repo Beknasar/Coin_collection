@@ -27,7 +27,10 @@ urlpatterns = [
     path('collections/', include([
         path('', CollectionView.as_view(), name='collection_list'),
         path('create/', CollectionCreateView.as_view(), name='collection_create'),
-        path('<int:pk>/', CollectionDetailView.as_view(), name='collection_detail'),
+        path('<int:pk>/', include([
+            path('', CollectionDetailView.as_view(), name='collection_detail'),
+            path('delete/', CollectionDeleteView.as_view(), name='collection_delete'),
+        ])),
     ])),
     path('coins_category_list/<int:pk>/', CoinCategoryView.as_view(), name='coin_currency_nominal'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

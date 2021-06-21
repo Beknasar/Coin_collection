@@ -1,26 +1,22 @@
-{#{% extends 'base.html' %}#}
-{#{% load staticfiles %}#}
-{#{% block title %}Delete{% endblock %}#}
-{##}
-{#{% block menu %}#}
-{#    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:coin_view' coin.pk %}?next={{ request.get_full_path }}">Отмена</a></li>#}
-{#{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#    <div class="text-center">#}
-{#        <h1>Вы уверены, что хотите удалить монету "{{ coin.nominal }} {{ coin.currency }} {{ coin.year_of_issue }} [{{ coin.country }}]"?</h1>#}
-{#        {% if coin.picture %}#}
-{#            <img src="{{ coin.picture.url }}" class="picture" width="auto" height="250" alt="coin picture">#}
-{#            <br>#}
-{#        {% else %}#}
-{#            <img src="{% static 'img/empty.jpg' %}" width="250" height="250" alt="empty picture">#}
-{#            <br>#}
-{#        {% endif %}#}
-{#        <form action="{% url "webapp:coin_delete" coin.pk %}" method="post">#}
-{#            {% csrf_token %}#}
-{#            <br>#}
-{#            <button type="submit" class="btn btn-danger">Подтвердить</button>#}
-{#            <a href="{% url 'webapp:coin_view' coin.pk %}" class="btn btn-secondary">Отмена</a>#}
-{#        </form>#}
-{#    </div>#}
-{#{% endblock %}#}
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Delete{% endblock %}
+
+{% block menu %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:collection_detail' collection.pk %}?next={{ request.get_full_path }}">Отмена</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Вы уверены, что хотите удалить коллекцию "{{ collection.name }}"?</h1>
+        <p>{{ collection.countries }}</p>
+        <p>{{ collection.years }}</p>
+        <pre class="pre">{{ collection.comment }}</pre>
+        <form action="{% url "webapp:collection_delete" collection.pk %}" method="post">
+            {% csrf_token %}
+            <br>
+            <button type="submit" class="btn btn-danger">Подтвердить</button>
+            <a href="{% url 'webapp:collection_detail' collection.pk %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+{% endblock %}
