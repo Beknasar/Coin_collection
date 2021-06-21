@@ -19,7 +19,7 @@ class CollectionView(ListView):
         return data
 
 
-class CollectionCoinDeleteView(DeleteView):
+class CollectionCoinDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'collections/coin/collection_coin_delete.html'
     model = Coin_in_Collection
     success_url = reverse_lazy('webapp:index')
@@ -29,7 +29,7 @@ class CollectionCoinDeleteView(DeleteView):
                self.get_object().owner == self.request.user
 
 
-class CollectionCoinCreateView(CreateView):
+class CollectionCoinCreateView(LoginRequiredMixin, CreateView):
     template_name = 'collections/coin/collection_coin_create.html'
     form_class = CollectionCoinForm
     model = Coin_in_Collection
@@ -71,7 +71,7 @@ class CollectionCoinDetailView(DetailView):
     template_name = 'collections/coin/collection_coin_detail.html'
 
 
-class CollectionCreateView(CreateView):
+class CollectionCreateView(LoginRequiredMixin, CreateView):
     model = Collection
     template_name = 'collections/collection_create.html'
     form_class = CollectionForm
@@ -100,7 +100,7 @@ class CollectionDetailView(DetailView):
     template_name = 'collections/collection_detail.html'
 
 
-class CollectionDeleteView(DeleteView):
+class CollectionDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'collections/collection_delete.html'
     model = Collection
     success_url = reverse_lazy('webapp:index')
