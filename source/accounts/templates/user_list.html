@@ -3,6 +3,7 @@
 {% block styles %}<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">{% endblock %}
 
 {% block search %}
+    <br>
     <div class="search-form">
             <form action="{% url 'webapp:index' %}" method="GET">
                 <input type="text" name="search">
@@ -12,14 +13,30 @@
 {% endblock %}
 {% block content %}
     <br/>
+    <ul class="list-group">
+      <li class="list-group-item active">Предложения</li>
+        {% for offer in offers %}
+            <li class="list-group-item d-flex justify-content-between">
+            {{ offer.user.get_full_name|default:offer.user.username }} хочет обменяться {{ offer.to_coin }} на {{ offer.coin }}
+            <div style="display: inline-block">
+                <a href="{% url 'webapp:offer_accept' offer.pk %}" class="btn btn-success ">Принять</a>
+                <a href="{% url 'webapp:offer_delete' offer.pk %}" class="btn btn-danger">Отмена</a>
+            </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Пусто</li>
+        {% endfor %}
+    </ul>
     <h2>Список пользователей: </h2>
     <div class="container">
         <table class="table" align="center">
             {% for user in users %}
+                {% if user != request.user %}
                 <tr>
                     <td>{{ user }}</td>
                     <td><a href="{% url 'accounts:detail' user.pk%}">Ссылка</a></td>
                 </tr>
+                {% endif %}
             {% endfor %}
         </table>
     </div>

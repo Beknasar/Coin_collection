@@ -98,15 +98,32 @@ class Collection(Base):
         verbose_name_plural = "Коллекции"
 
 
+
 class Coin_in_Collection(CoinBase):
-    owner = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=1,
                                related_name='coins', verbose_name='создатель')
     quantity = models.IntegerField(verbose_name='Количество', default=1, validators=(MinValueValidator(1),))
     collection = models.ForeignKey('webapp.Collection', related_name="coins_coll", on_delete=models.CASCADE, verbose_name="коллекция")
 
     def __str__(self):
-        return f'{self.nominal} {self.currency}  x{self.quantity} шт'
+        return f'{self.nominal} {self.currency} {self.country} {self.year_of_issue}'
 
     class Meta:
         verbose_name = "монета в коллекции"
         verbose_name_plural = "монеты в коллекции"
+
+
+class Offer(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='exchanges', verbose_name='Пользователь')
+    coin = models.ForeignKey('webapp.Coin_in_Collection', related_name="offers", on_delete=models.CASCADE,
+                                   verbose_name="монета")
+    amount = models.IntegerField(verbose_name='Количество')
+    to_coin = models.ForeignKey('webapp.Coin_in_Collection', related_name="to_offers", on_delete=models.CASCADE,
+                                   verbose_name="на монету")
+
+    def __str__(self):
+        return f"{self.user}'s {self.coin} to {self.to_coin}"
+
+    class Meta:
+        verbose_name = "предложение"
+        verbose_name_plural = "предложения"

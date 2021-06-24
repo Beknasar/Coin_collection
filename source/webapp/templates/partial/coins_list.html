@@ -30,6 +30,9 @@
                     {% if request.user.is_authenticated and not collection_coins %}
                         <a href="{% url "webapp:collection_coin_create" coin.pk %}" class="btn btn-success mt-1">Добавить в коллекцию</a>
                     {% endif %}
+                    {% if request.user.is_authenticated and request.user != coin.owner and collection_coins %}
+                        <a href="{% url "webapp:offer_create" coin.pk %}" class="btn btn-success mt-1">Обмен</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

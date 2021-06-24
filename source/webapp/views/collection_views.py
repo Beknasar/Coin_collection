@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 
-from webapp.models import Coin, Country, Collection, Coin_in_Collection
-from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
-from webapp.forms import SearchForm, CoinForm, CollectionForm, CollectionCoinForm
-from django.db.models import Q
+from webapp.models import Coin, Country, Collection, Coin_in_Collection, Offer
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, View
+from webapp.forms import CollectionForm, CollectionCoinForm, OfferForm
+
 
 
 class CollectionView(ListView):
@@ -108,3 +109,68 @@ class CollectionDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.has_perm('webapp.delete_collection') or \
                self.get_object().owner == self.request.user
+
+
+class OfferCreateView(CreateView):
+    model = Offer
+    form_class = OfferForm
+    template_name = 'collections/coin/offer.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['coin'] = get_object_or_404(Coin_in_Collection, pk=self.kwargs.get('pk'))
+        return context
+
+    def form_valid(self, form):
+        offer = form.save(commit=False)
+        amount = form.cleaned_data.get('amount', 1)
+        offer.coin = get_object_or_404(Coin_in_Collection, pk=self.kwargs.get('pk'))
+        offer.user = User.objects.get(pk=self.request.user.pk)
+        if amount <= offer.coin.quantity:
+            offer.save()
+        else:
+            offer.amount = offer.coin.quantity
+            offer.save()
+        return redirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('webapp:index')
+
+
+class OfferDeleteView(DeleteView):
+    model = Offer
+    success_url = reverse_lazy('accounts:list')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return redirect(success_url)
+
+    # удаление без подтверждения
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
+
+class OfferAcceptView(View):
+    def check_coin(self, coin):
+        if coin.quantity == 0:
+            coin.delete()
+        coin.save()
+        return coin
+
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        offer = get_object_or_404(Offer, pk=pk)
+        # print(proposer)
+        offer.coin.owner = offer.to_coin.owner
+        offer.to_coin.owner = offer.user
+        offer.to_coin.quantity -= offer.amount
+        offer.coin.quantity -= 1
+        self.check_coin(offer.to_coin)
+        self.check_coin(offer.coin)
+        offer.delete()
+        return redirect("accounts:list")

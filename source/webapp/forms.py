@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from webapp.models import Coin, Collection, Coin_in_Collection, Currency
+from webapp.models import Coin, Collection, Coin_in_Collection, Currency, Offer
 
 
 class SearchForm(forms.Form):
@@ -49,3 +49,9 @@ class CollectionCoinForm(forms.ModelForm):
         if errors:
             raise ValidationError(errors)
         return cleaned_data
+
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = ['amount', 'to_coin']

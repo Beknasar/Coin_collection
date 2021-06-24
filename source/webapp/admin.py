@@ -1,5 +1,5 @@
 from django.contrib import admin
-from webapp.models import Country, Currency, Material, Coin, Nominal, Collection,  Coin_in_Collection
+from webapp.models import Country, Currency, Material, Coin, Nominal, Collection,  Coin_in_Collection, Offer
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -24,8 +24,8 @@ class CoinAdmin(admin.ModelAdmin):
     list_filter = ('country',)
     empty_value_display = '---'
 
-
-admin.site.register(Coin_in_Collection)
+admin.site.register(Offer)
+admin.site.register(Coin_in_Collection, CoinAdmin)
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(Material)

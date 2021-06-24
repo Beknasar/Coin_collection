@@ -183,48 +183,9 @@
 },
 {
   "model": "webapp.coin",
-  "pk": 1,
-  "fields": {
-    "owner": 1,
-    "picture": "coin_pics/100-yuaney-2017-panda-6996.jpg",
-    "nominal": 100,
-    "material": 4,
-    "currency": 10,
-    "country": 5,
-    "weight": 8.0,
-    "size": "22.0",
-    "form": "\u041a\u0440\u0443\u0433",
-    "year_of_issue": 2017,
-    "year_of_issue_end": null,
-    "series": null,
-    "description": "\u6211\u4e0d\u4f1a\u8bf4\u4e2d\u6587\u3002"
-  }
-},
-{
-  "model": "webapp.coin",
-  "pk": 2,
-  "fields": {
-    "owner": 2,
-    "picture": "coin_pics/dollar.jpg",
-    "nominal": 1,
-    "material": 1,
-    "currency": 3,
-    "country": 1,
-    "weight": 26.73,
-    "size": "38,1x3,1",
-    "form": "\u041c\u043e\u043d\u0435\u0442\u043d\u0430\u044f",
-    "year_of_issue": 1988,
-    "year_of_issue_end": null,
-    "series": null,
-    "description": "\u0425\u0443\u0434\u043e\u0436\u043d\u0438\u043a:\r\n\u0430\u0432\u0435\u0440\u0441: Patricia Lewis Verani, \u0440\u0435\u0432\u0435\u0440\u0441: Sheri Joseph Winter"
-  }
-},
-{
-  "model": "webapp.coin",
   "pk": 3,
   "fields": {
-    "owner": 1,
-    "picture": "coin_pics/rubl.jpg",
+    "picture": "",
     "nominal": 1,
     "material": 2,
     "currency": 9,
@@ -242,8 +203,7 @@
   "model": "webapp.coin",
   "pk": 4,
   "fields": {
-    "owner": 1,
-    "picture": "coin_pics/5-reyhsmarok.jpg",
+    "picture": "",
     "nominal": 5,
     "material": 1,
     "currency": 7,
@@ -261,8 +221,7 @@
   "model": "webapp.coin",
   "pk": 5,
   "fields": {
-    "owner": 1,
-    "picture": "coin_pics/dublon.jpg",
+    "picture": "",
     "nominal": 1,
     "material": 4,
     "currency": 5,
@@ -280,7 +239,6 @@
   "model": "webapp.coin",
   "pk": 7,
   "fields": {
-    "owner": 1,
     "picture": "",
     "nominal": 100,
     "material": 1,
@@ -299,7 +257,6 @@
   "model": "webapp.coin",
   "pk": 8,
   "fields": {
-    "owner": 2,
     "picture": "",
     "nominal": 1,
     "material": 4,
@@ -316,24 +273,56 @@
 },
 {
   "model": "webapp.collection",
-  "pk": 1,
+  "pk": 9,
   "fields": {
-    "owner": 1,
-    "name": "\u0422\u0435\u0441\u0442",
-    "years": "1988-1989",
-    "countries": null,
-    "comment": "My first collection"
+    "name": "My first collection",
+    "owner": 2,
+    "years": "1987-1989",
+    "countries": "USA",
+    "comment": "My not very important comment."
   }
 },
 {
   "model": "webapp.collection",
-  "pk": 9,
+  "pk": 10,
   "fields": {
-    "owner": 2,
-    "name": "My first collection",
-    "years": "1987-1989",
+    "name": "\u041c\u043e\u044f \u043d\u043e\u0432\u0430\u044f \u043a\u043e\u043b\u043b\u0435\u043a\u0446\u0438\u044f",
+    "owner": 1,
+    "years": "1988-1989",
     "countries": "USA",
-    "comment": "My not very important comment."
+    "comment": "My useless comment!"
+  }
+},
+{
+  "model": "webapp.collection",
+  "pk": 11,
+  "fields": {
+    "name": "\u041c\u043e\u044f \u0432\u0442\u043e\u0440\u0430\u044f \u043a\u043e\u043b\u043b\u0435\u043a\u0446\u0438\u044f",
+    "owner": 1,
+    "years": null,
+    "countries": null,
+    "comment": ""
+  }
+},
+{
+  "model": "webapp.coin_in_collection",
+  "pk": 5,
+  "fields": {
+    "picture": "",
+    "nominal": 1,
+    "material": 4,
+    "currency": 3,
+    "country": 1,
+    "weight": 12.0,
+    "size": "38,1x3,1",
+    "form": "\u041a\u0440\u0443\u0433",
+    "year_of_issue": 1989,
+    "year_of_issue_end": null,
+    "series": null,
+    "description": "Normal description",
+    "owner": 1,
+    "quantity": 1,
+    "collection": 10
   }
 }
 ]

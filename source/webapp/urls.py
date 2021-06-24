@@ -24,6 +24,13 @@ urlpatterns = [
             path('delete/', CollectionCoinDeleteView.as_view(), name='collection_coin_delete'),
         ])),
     ])),
+    path('offer/', include([
+        path('<int:pk>/', include([
+            path('create/', OfferCreateView.as_view(), name='offer_create'),
+            path('delete/', OfferDeleteView.as_view(), name='offer_delete'),
+            path('accept/', OfferAcceptView.as_view(), name='offer_accept'),
+        ])),
+    ])),
     path('collections/', include([
         path('', CollectionView.as_view(), name='collection_list'),
         path('create/', CollectionCreateView.as_view(), name='collection_create'),

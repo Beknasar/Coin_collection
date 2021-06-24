@@ -12,7 +12,7 @@ from django.views.decorators.cache import never_cache
 
 from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm, PasswordChangeForm
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-
+from webapp.models import Coin, Country, Collection, Coin_in_Collection, Offer
 from accounts.models import Profile
 from webapp.forms import SearchForm
 
@@ -36,16 +36,25 @@ class RegisterView(CreateView):
         return next_url
 
 
-class UserListView(PermissionRequiredMixin, ListView):
+class UserListView(ListView):
     template_name = 'user_list.html'
     context_object_name = 'users'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         form = SearchForm(data=self.request.GET)
+        user = User.objects.get(pk=self.request.user.pk)
+        collection_coins = Coin_in_Collection.objects.filter(owner=user)
+        offers = []
+        for coin in collection_coins:
+            if coin.offers:
+                for offer in coin.offers.all():
+                    offers.append(offer)
         if form.is_valid():
             search = form.cleaned_data['search']
             kwargs['search'] = search
         kwargs['form'] = form
+        kwargs['offers'] = offers
+        kwargs['user'] = user
         return super().get_context_data(object_list=object_list, **kwargs)
 
     def get_queryset(self):
@@ -57,8 +66,8 @@ class UserListView(PermissionRequiredMixin, ListView):
                 data = data.filter(Q(name__icontains=search) | Q(description__icontains=search))
         return data
 
-    def has_permission(self):
-        return self.request.user.groups.filter(pk=2) or self.request.user.groups.filter(pk=3) or self.request.user.pk == 1
+    # def has_permission(self):
+    #     return self.request.user.groups.filter(pk=2) or self.request.user.groups.filter(pk=3) or self.request.user.pk == 1
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
