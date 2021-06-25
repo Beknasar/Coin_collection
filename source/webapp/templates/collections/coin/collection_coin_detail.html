@@ -3,7 +3,7 @@
 {% block title %}View{% endblock %}
 
 {% block menu %}
-    {% if perms.webapp.delete_coin %}
+    {% if perms.webapp.delete_coin and request.user == coin_in_collection.owner %}
         <li class="nav-item"><a class="nav-link" href="{% url "webapp:collection_coin_delete" coin_in_collection.pk %}">Delete<i class="fas fa-trash"></i></a></li>
     {% endif %}
 {% endblock %}
